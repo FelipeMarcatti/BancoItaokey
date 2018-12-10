@@ -29,13 +29,12 @@ public class ClienteDAO {
 
     public void inserir(Cliente cliente) {
         try {
-            String insercao = "INSERT INTO Cliente (nome, cpf, dataNascimento, senha, idCliente) VALUES (?, ?, ?, ?, ?);";
+            String insercao = "INSERT INTO Cliente (nome, cpf, datanascimento, senha) VALUES (?, ?, ?, ?);";
             try (PreparedStatement pstmt = conexao.prepareStatement(insercao)) {
                 pstmt.setString(1, cliente.getNome());
                 pstmt.setString(2, cliente.getCpf());
                 pstmt.setDate(3, java.sql.Date.valueOf(cliente.getDataNasc()));           
                 pstmt.setString(4, cliente.getSenha()); 
-                pstmt.setInt(5, cliente.getIdCliente()); 
                 
                 
                 int resultado = pstmt.executeUpdate();
@@ -59,13 +58,13 @@ public class ClienteDAO {
     public void alterar(Cliente cliente) {
         try {
 
-            String alteracao = "UPDATE cliente SET nome = ?, cpf = ?, dataNasc = ?, senha = ?;";
+            String alteracao = "UPDATE cliente WHERE idcliente = ? SET nome = ?, cpf = ?, dataNascimento = ?, senha = ?;";
             try (PreparedStatement pstmt = conexao.prepareStatement(alteracao)) {
-                pstmt.setString(1, cliente.getNome());
-                pstmt.setString(2, cliente.getCpf());
-                pstmt.setDate(3, java.sql.Date.valueOf(cliente.getDataNasc()));    
-                pstmt.setString(4, cliente.getSenha()); 
-                pstmt.setInt(5, cliente.getIdCliente());
+                pstmt.setInt(1, cliente.getIdCliente());
+                pstmt.setString(2, cliente.getNome());
+                pstmt.setString(3, cliente.getCpf());
+                pstmt.setDate(4, java.sql.Date.valueOf(cliente.getDataNasc()));    
+                pstmt.setString(5, cliente.getSenha());
                 int alteracoes = pstmt.executeUpdate();
                 if (alteracoes == 1) {
                     System.out.println("\nAlteracao do cliente realizada com sucesso.");
@@ -84,11 +83,11 @@ public class ClienteDAO {
         }
     }
     
-    public void remover(Cliente cliente) {
+    public void remover(int id) {
         try {
-            String remocao = "DELETE FROM cliente WHERE id = ?";
+            String remocao = "DELETE FROM cliente WHERE idcliente = ?";
             try (PreparedStatement pstmt = conexao.prepareStatement(remocao)) {
-                pstmt.setInt(1, cliente.getIdCliente());
+                pstmt.setInt(1, id);
                 int remocoes = pstmt.executeUpdate();
                 if (remocoes == 1) {
                     System.out.println("Remoção realizada com sucesso.");

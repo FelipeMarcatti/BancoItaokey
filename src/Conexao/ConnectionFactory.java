@@ -22,7 +22,7 @@ public class ConnectionFactory {
         String porta = "60267";
         String bd = "BancoItaokey";
         String login = "postgres";
-        String senha = "123456789";
+        String senha = "felipe";
        // String url = caminho + "://" + host + ":" + porta + "/" + bd;
         String url = "jdbc:postgresql://localhost/BancoItaokey";
         Connection conexao = null;

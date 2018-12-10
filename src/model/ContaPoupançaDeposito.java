@@ -18,7 +18,7 @@ public class ContaPoupançaDeposito {
     private LocalDate dataTermino;
     private LocalDate aniversario;
     private Boolean status;    
-    private ContaPoupança contaPoupanca;
+    private int idContaPoupanca;
 
     public ContaPoupançaDeposito() {
         
@@ -72,19 +72,22 @@ public class ContaPoupançaDeposito {
         this.status = status;
     }
 
-    public ContaPoupança getContaPoupanca() {
-        return contaPoupanca;
+    public int getIdContaPoupanca() {
+        return idContaPoupanca;
     }
 
-    public void setContaPoupanca(ContaPoupança contaPoupanca) {
-        this.contaPoupanca = contaPoupanca;
+    public void setIdContaPoupanca(int idContaPoupanca) {
+        this.idContaPoupanca = idContaPoupanca;
     }
 
     @Override
     public String toString() {
-        return "ContaPoupan\u00e7aDep\u00f3sito{" + "idCPD=" + idCPD + ", saldo=" + saldo + ", dataInicio=" + dataInicio + ", dataTermino=" + dataTermino + ", aniversario=" + aniversario + ", status=" + status + ", contaPoupanca=" + contaPoupanca + '}';
+        return "ContaPoupan\u00e7aDeposito{" + "idCPD=" + idCPD + ", saldo=" + saldo + ", dataInicio=" + dataInicio + ", dataTermino=" + dataTermino + ", aniversario=" + aniversario + ", status=" + status + ", idContaPoupanca=" + idContaPoupanca + '}';
     }
-    
+
+  
+
+  
 
    
 
@@ -96,19 +99,5 @@ public class ContaPoupançaDeposito {
         return hash;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final ContaPoupançaDeposito other = (ContaPoupançaDeposito) obj;
-        return true;
-    }
-   
+ 
 }

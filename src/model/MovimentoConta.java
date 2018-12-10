@@ -18,7 +18,7 @@ public class MovimentoConta {
     private String descricao;
     private Double valor;
     private LocalDate data;
-    private Conta conta;
+    private int idConta;
     
     public MovimentoConta() {}
 
@@ -62,29 +62,23 @@ public class MovimentoConta {
         this.data = data;
     }
 
-    public Conta getConta() {
-        return conta;
+    public int getIdConta() {
+        return idConta;
     }
 
-    public void setConta(Conta conta) {
-        this.conta = conta;
+    public void setIdConta(int idConta) {
+        this.idConta = idConta;
     }
 
     @Override
     public String toString() {
-        return "MovimentoConta{" + "idMovimento=" + idMovimento + ", tipoMovimento=" + tipoMovimento + ", descricao=" + descricao + ", valor=" + valor + ", data=" + data + ", conta=" + conta + '}';
+        return "MovimentoConta{" + "idMovimento=" + idMovimento + ", tipoMovimento=" + tipoMovimento + ", descricao=" + descricao + ", valor=" + valor + ", data=" + data + ", idConta=" + idConta + '}';
     }
-
-   
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 53 * hash + this.idMovimento;
-        hash = 53 * hash + Objects.hashCode(this.tipoMovimento);
-        hash = 53 * hash + Objects.hashCode(this.descricao);
-        hash = 53 * hash + Objects.hashCode(this.valor);
-        hash = 53 * hash + Objects.hashCode(this.data);
+        hash = 11 * hash + this.idMovimento;
         return hash;
     }
 
@@ -100,7 +94,17 @@ public class MovimentoConta {
             return false;
         }
         final MovimentoConta other = (MovimentoConta) obj;
+        if (this.idMovimento != other.idMovimento) {
+            return false;
+        }
         return true;
     }
+
+ 
+
+
+   
+
+
     
 }

@@ -5,6 +5,18 @@
  */
 package telas;
 
+import DAO.ContaDAO;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import model.Conta;
+import model.Conta;
+
 /**
  *
  * @author Lucas
@@ -14,6 +26,13 @@ public class CRUDConta extends javax.swing.JFrame {
     /**
      * Creates new form CRUDConta
      */
+    
+    Connection conexao = Conexao.ConnectionFactory.getConexao();
+    ContaDAO dDAO = new ContaDAO(conexao);
+    Conta c = new Conta();
+    private List<Conta> listaContas;
+    private Conta conta = null;
+    
     public CRUDConta() {
         initComponents();
         setLocationRelativeTo( null );
@@ -36,7 +55,7 @@ public class CRUDConta extends javax.swing.JFrame {
         txtId = new javax.swing.JTextField();
         TxtIDCliente = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        txtRemove = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -98,10 +117,10 @@ public class CRUDConta extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Remover");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        txtRemove.setText("Remover");
+        txtRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                txtRemoveActionPerformed(evt);
             }
         });
 
@@ -160,7 +179,7 @@ public class CRUDConta extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(20, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -175,7 +194,7 @@ public class CRUDConta extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
-                    .addComponent(jButton2)
+                    .addComponent(txtRemove)
                     .addComponent(jButton1))
                 .addGap(13, 13, 13)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -197,37 +216,25 @@ public class CRUDConta extends javax.swing.JFrame {
         jTable1.getSelectionModel().clearSelection();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-      /*  // TODO add your handling code here:
-        int linhaSelecionada = jTable1.getSelectedRow();
-        if (linhaSelecionada != -1) {
-            int idm = (int) jTable1.getValueAt(jTable1.getSelectedRow(), 0);
-            morador = mDAO.mostrar(idm);
-            mDAO.remover(morador);
-            this.atualiza();
-            this.limpa();
-            JOptionPane.showMessageDialog(this, "Morador removido com sucesso.");
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione um morador para remover.");
-        }*/
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void txtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRemoveActionPerformed
+      String sid = txtRemove.getText();
+        int id = Integer.valueOf(sid);
+        try {
+            dDAO.deleta(id);
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUDConta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+          
+        
+        JOptionPane.showMessageDialog(null, "Cliente deletado!");
+    }//GEN-LAST:event_txtRemoveActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       /* // TODO add your handling code here:
-        String senha;
-        senha = new String((txtSenha.getPassword()));
-        senha = criptografia.criptografa(8, senha);
-        this.uf = txtUf.getSelectedItem().toString();
-        m.setNome(txtSaldo.getText());
-        m.setCpf(txtCpf.getText());
-        m.setRg(uf + "-" + txtRg.getText());
-        m.setSenha(senha);
-        m.setnAp(Integer.parseInt(txtNap.getText()));
-        if (jTable1.getSelectedRow() != -1) {
-            this.alterar();
-        } else {
-            this.adicionar();
-        }*/
+        Double Saldo = new Double(txtSaldo.getText());        
+        String sid = TxtIDCliente.getText();
+        int Idc = Integer.valueOf(sid);
+        c.setIdCliente(Idc);
+        this.adiciona();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -245,7 +252,119 @@ public class CRUDConta extends javax.swing.JFrame {
         this.txtSenha.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 4).toString());
         this.txtNap.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 5).toString());*/
     }//GEN-LAST:event_jTable1MouseClicked
+     private void msgValidacao() {
+        String dados1 = "";
+        String dados2 = "";
+        if (txtNome.getText().isEmpty()) {
+            dados1 += "\nNome";
+        }
+       /* if (txtCpf.getText().contains(" ") || cpf.isCPF(txtCpf.getText()) == false) {
+            dados1 += "\nCPF";
+        }*/
+        if (txtNiver.getText().contains(" "))
+        {
+            dados1 += "\nNiver";
+        }
+        if (c.getSenha().length() == 0) {
+            dados1 += "\nSenha";
+        }
+        if (dados1 != "") {
+            dados1 = "Os seguintes dados sÃ£o invÃ¡lidos ou nÃ£o foram preenchidos corretamente: " + dados1;
+            JOptionPane.showMessageDialog(this, dados1);
 
+        }
+
+        if (cDAO.checkCpf(txtCpf.getText()) && (jTable1.getSelectedRow() != -1)) {
+            dados2 = "\n\nCPF jÃ¡ cadastrado!";
+
+        }
+
+        if ((dados2 != "") && (jTable1.getSelectedRow() == -1)) {
+            dados2 = "Os seguintes dados jÃ¡ foram cadastrados no sistema: " + dados2;
+            JOptionPane.showMessageDialog(this, dados2);
+
+        }
+        if (c.getSenha().length() < 8 && c.getSenha().length() > 0) {
+            JOptionPane.showMessageDialog(this, "Sua senha Ã© fraca! VocÃª deve usar pelo menos 8 caracteres para sua seguranÃ§a.");
+
+        }
+
+    }
+
+    private void alterar() {
+        String msg = "";
+        String cpf;
+        String niver;
+        Cliente c1 = new Cliente();
+        if (c != null
+                && !txtNome.getText().isEmpty()                
+                && !txtCpf.getText().contains(" ")
+                && !txtNiver.getText().contains(" ")
+                //&& this.cpf.isCPF(txtCpf.getText()) == true                
+                && c.getSenha().length() >= 8
+                ) {
+
+            int id = (int) jTable1.getValueAt(jTable1.getSelectedRow(), 0);
+            c1 = cDAO.mostrar(id);
+            cpf = txtCpf.getText();
+            niver = txtNiver.getText();
+
+            if ((!c1.getCpf().equals(cpf)) && cDAO.checkCpf(txtCpf.getText())) {
+                msg += "\n\nCPF";
+            }
+
+            /*if ((!c1.getDataNasc().equals(niver)) && cDAO.checkRg(txtNiver.getText())) {
+                msg += "\n\nAniversario";
+            }*/
+            if (msg != "") {
+                msg = "Os seguintes dados jÃ¡ estÃ£o cadastrados no sistema: " + msg;
+                JOptionPane.showMessageDialog(this, msg);
+
+            } else {
+                this.alteracao();
+            }
+
+        } else {
+            this.msgValidacao();
+        }
+
+    }
+
+    private void adicionar() {
+
+        if (c != null
+                && !txtNome.getText().isEmpty()
+                && !txtCpf.getText().contains(" ")
+                && !txtNiver.getText().contains(" ")
+                //&& this.cpf.isCPF(txtCpf.getText()) == true                
+                && c.getSenha().length() >= 8
+                && !cDAO.checkCpf(txtCpf.getText())
+                ) {
+
+            cDAO.inserir(c);
+            this.atualiza();
+            this.limpa();            
+            JOptionPane.showMessageDialog(this, "Cliente adicionado com sucesso.");
+            System.out.println(cDAO.mostrarTodos());
+
+        } else {
+            this.msgValidacao();
+
+        }
+
+    }
+
+    private void alteracao() {
+        
+        int id1 = (int) jTable1.getValueAt(jTable1.getSelectedRow(), 0);
+        c.setIdCliente(id1);
+        cDAO.alterar(c);
+        this.limpa();
+        this.atualiza();
+        JOptionPane.showMessageDialog(this, "Cliente alterado com sucesso.");
+    }
+    
+    
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         TelaADM tADM = new TelaADM();
         dispose();
@@ -255,6 +374,18 @@ public class CRUDConta extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    /*
+    public void atualiza() {
+        List<Conta> clientes = this.cDAO.mostrarTodos();
+        System.out.println(clientes.toString());
+
+        modeloTabela.setRowCount(0);
+        for (Cliente i : clientes) {
+            this.modeloTabela.addRow(new Object[]{i.getIdCliente(), i.getNome(), i.getCpf(), i.getDataNasc(), i.getSenha()});
+        }
+
+    }
+*/
     private void limpa() {
         this.txtSaldo.setText("");
         this.TxtIDCliente.setText("");
@@ -296,7 +427,6 @@ public class CRUDConta extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField TxtIDCliente;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel10;
@@ -306,6 +436,7 @@ public class CRUDConta extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtId;
+    private javax.swing.JButton txtRemove;
     private javax.swing.JTextField txtSaldo;
     // End of variables declaration//GEN-END:variables
 }

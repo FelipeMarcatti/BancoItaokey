@@ -13,6 +13,7 @@ import java.util.Objects;
  */
 public class Fundo {
     private int idFundo;
+    private int idCliente;
     private String nome;
     private Double saldoTotal;
 

@@ -154,7 +154,7 @@ public class Tempo {
             }
         }
     }
-        */
+        
     public void limpa()
     {
          String sql = "truncate" + " tempo ";
@@ -167,7 +167,7 @@ public class Tempo {
             Logger.getLogger(Tempo.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }
+    }*/
     public void EnviarData()
     {
 
@@ -176,7 +176,7 @@ public class Tempo {
             pstmt.setDate(1,java.sql.Date.valueOf(getTemp()));
             pstmt.execute();
             pstmt.close();
-            conexao.close();
+            //conexao.close();
         } catch (SQLException ex)
         {
             Logger.getLogger(Tempo.class.getName()).log(Level.SEVERE, null, ex);

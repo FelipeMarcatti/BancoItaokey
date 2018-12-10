@@ -9,6 +9,7 @@ import Conexao.ConnectionFactory;
 import DAO.AdminDAO;
 import javax.swing.JOptionPane;
 import DAO.ClienteDAO;
+import bancoitaokey.Criptografia;
 import java.sql.Connection;
 import model.Admin;
 import model.Cliente;
@@ -50,10 +51,10 @@ public class TELALogin extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextLogin = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jComboBoxAcesso = new javax.swing.JComboBox<>();
         jPasswordSenha = new javax.swing.JPasswordField();
+        jTextLogin = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -94,6 +95,12 @@ public class TELALogin extends javax.swing.JFrame {
             }
         });
 
+        try {
+            jTextLogin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -120,9 +127,9 @@ public class TELALogin extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(21, 21, 21)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPasswordSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -265,6 +272,6 @@ public class TELALogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordSenha;
-    private javax.swing.JTextField jTextLogin;
+    private javax.swing.JFormattedTextField jTextLogin;
     // End of variables declaration//GEN-END:variables
 }
