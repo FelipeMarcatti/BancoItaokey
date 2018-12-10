@@ -12,7 +12,7 @@ package model;
 public class ContaPoupança {
     private int idPoupanca;
     private Double saldo; //soma de todos os depositos
-    private Cliente cliente;
+    private int idCliente;
 
     public ContaPoupança() {
         
@@ -34,18 +34,20 @@ public class ContaPoupança {
         this.saldo = saldo;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public int getIdCliente() {
+        return idCliente;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
 
     @Override
     public String toString() {
-        return "ContaPoupan\u00e7a{" + "idPoupanca=" + idPoupanca + ", saldo=" + saldo + ", cliente=" + cliente + '}';
+        return "ContaPoupan\u00e7a{" + "idPoupanca=" + idPoupanca + ", saldo=" + saldo + ", idCliente=" + idCliente + '}';
     }
+
+   
 
    
     @Override
@@ -55,21 +57,4 @@ public class ContaPoupança {
         return hash;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final ContaPoupança other = (ContaPoupança) obj;
-        return true;
-    }
-
-   
-     
 }

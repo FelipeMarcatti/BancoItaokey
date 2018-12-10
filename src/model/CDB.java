@@ -11,6 +11,7 @@ package model;
  */
 public class CDB {
     private int idCDB;
+    private int idCliente;
     private String nome;
     private Double saldoTotal;
 

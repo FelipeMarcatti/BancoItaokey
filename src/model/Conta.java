@@ -14,13 +14,11 @@ import java.util.Objects;
 public class Conta {
     private int idConta;
     private Double saldo;
-    private Cliente cliente;
+    private int idCliente;
     
     
     
-    Conta() {
-        
-    }
+    
 
     public int getIdConta() {
         return idConta;
@@ -38,13 +36,15 @@ public class Conta {
         this.saldo = saldo;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public int getIdCliente() {
+        return idCliente;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
+
+ 
     
     
 
@@ -64,35 +64,16 @@ public class Conta {
         this.saldo -= saldo;
     } */
 
+    
+    
+    
+    
+    
+
+
     @Override
     public String toString() {
-        return "Conta{" + "idConta=" + idConta + ", saldo=" + saldo + ", cliente=" + cliente + '}';
+        return "Conta{" + "idConta=" + idConta + ", saldo=" + saldo + ", idCliente=" + idCliente + '}';
     }
 
-    
-    
-    
-    
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 41 * hash + this.idConta;
-        hash = 41 * hash + Objects.hashCode(this.saldo);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Conta other = (Conta) obj;
-        return true;
-    }
 }
